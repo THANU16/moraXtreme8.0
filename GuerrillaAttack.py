@@ -15,13 +15,13 @@ def hungarian_algorithm(cost_matrix):
         min_val = min(cost_matrix[i])
         for j in range(n):
             cost_matrix[i][j] -= min_val
-    print(cost_matrix)
+    # print(cost_matrix)
 
     for j in range(n):
         min_val = min(cost_matrix[i][j] for i in range(n))
         for i in range(n):
             cost_matrix[i][j] -= min_val
-    print(cost_matrix)
+    # print(cost_matrix)
 
     # Step 2: Find the minimum number of lines to cover all zeros in the matrix
     rows_covered = [False] * n
@@ -36,20 +36,20 @@ def hungarian_algorithm(cost_matrix):
                 for j in range(n):
                     if not cols_covered[j]:
                         min_val = min(min_val, cost_matrix[i][j])
-        print(rows_covered, cols_covered, min_val)
+        # print(rows_covered, cols_covered, min_val)
 
         # Subtract the minimum value from all uncovered values
         for i in range(n):
             if not rows_covered[i]:
                 for j in range(n):
                     cost_matrix[i][j] -= min_val
-        print(cost_matrix)
+        # print(cost_matrix)
 
         for j in range(n):
             if not cols_covered[j]:
                 for i in range(n):
                     cost_matrix[i][j] -= min_val
-        print(cost_matrix)
+        # print(cost_matrix)
 
         # Cover rows and columns with zeros
         for i in range(n):
@@ -60,7 +60,7 @@ def hungarian_algorithm(cost_matrix):
                         cols_covered[j] = True
                         lines += 1
                         break
-        print(rows_covered, cols_covered, lines)
+        # print(rows_covered, cols_covered, lines)
 
     # Step 3: Find the optimal assignment
     assignment = [-1] * n
@@ -68,7 +68,7 @@ def hungarian_algorithm(cost_matrix):
         for j in range(n):
             if cost_matrix[i][j] == 0 and assignment[j] == -1:
                 assignment[j] = i
-        print(assignment)
+        # print(assignment)
 
     return assignment
 
@@ -76,12 +76,16 @@ def min_total_time(cost_matrix):
     # Apply the Hungarian algorithm to find the optimal assignment
     cost_matrix_old = copy.deepcopy(cost_matrix)
     assignment = hungarian_algorithm(cost_matrix_old)
-    print(assignment)
-    print(cost_matrix)
-    print(cost_matrix_old)
+    # print(assignment)
+    # print(cost_matrix)
+    # print(cost_matrix_old)
 
+    temp = []
+    for i in range(len(assignment)):
+        temp.append(cost_matrix[i][assignment[i]])
+    # print(temp)
     # Calculate the minimum total time
-    total_time = sum(cost_matrix[i][assignment[i]] for i in range(len(assignment)))
+    total_time = max(temp)
 
     return total_time
 
@@ -134,7 +138,7 @@ for s_key, s_value in spies.items():
     for c_key, c_value in camps.items():
         graph[s_key][c_key] = calculate_time(s_value, c_value)
 
-print(graph)
+# print(graph)
 
 # Create the cost matrix
 cost_matrix = create_cost_matrix(graph, K)
@@ -143,7 +147,7 @@ cost_matrix = create_cost_matrix(graph, K)
 # for row in cost_matrix:
 #     print(row)
 
-print(cost_matrix)
+# print(cost_matrix)
 
 
 
@@ -154,6 +158,6 @@ total_time = min_total_time(cost_matrix)
 
 
 
-print("Minimum total time:", total_time)
+print(total_time)
 
 
